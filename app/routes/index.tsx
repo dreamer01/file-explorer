@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { json, useLoaderData, Link } from 'remix';
 
-import Sidebar from '~/components/Sidebar';
+import type { File } from '~/data/files';
+import RenderFile from '~/components/RenderFile';
 import { getFiles } from '~/data/files';
 
 type LoaderData = {
@@ -29,7 +30,16 @@ export default function Explorer() {
         </Link>
       </header>
       <div className='flex flex-1'>
-        <Sidebar files={files} setContent={setContent} />
+        <div className='w-1/5 bg-indigo-600 p-4 text-white'>
+          {files.map((file: File) => (
+            <RenderFile
+              key={file.name}
+              file={file}
+              depth={0}
+              setContent={setContent}
+            />
+          ))}
+        </div>
         <pre className='flex flex-1 p-4 bg-indigo-200 m-0'>{content}</pre>
       </div>
       <footer className='p-2 text-sm text-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white'>
